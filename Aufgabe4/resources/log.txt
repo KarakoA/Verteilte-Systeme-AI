@@ -1,0 +1,4 @@
+Jun 25, 2017 12:05:21 PM server.Server$ConnectionHandler run
+INFO: Address: /192.168.99.1:51531 PID: 10400 ThreadID: 15
+Jun 25, 2017 12:05:22 PM server.Server$ConnectionHandler run
+INFO: Address: /192.168.99.1:51533 PID: 10400 ThreadID: 16
