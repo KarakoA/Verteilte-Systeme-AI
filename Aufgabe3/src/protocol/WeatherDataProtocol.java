@@ -5,7 +5,7 @@ import java.time.format.DateTimeFormatter;
 
 
 public class WeatherDataProtocol {
-    public static final int SERVER_PORT = 7777;
+    public static final String REGISTRY_NAME = "WeatherData";
     public static final DateTimeFormatter SERVER_DATE_FORMAT = DateTimeFormatter.BASIC_ISO_DATE;
 
     public static final String ERROR_DATE_PARSE = "-1";

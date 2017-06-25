@@ -1,10 +1,13 @@
 package client;
 
 import protocol.WeatherDataProtocol;
+import rmi.WeatherDataRemote;
 
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 
 import static protocol.WeatherDataProtocol.ERROR_DATE_PARSE;
 import static protocol.WeatherDataProtocol.ERROR_NO_INFO_FOR_DATE;
@@ -20,17 +23,22 @@ public class Client implements Runnable {
             BufferedReader buReader = new BufferedReader(new InputStreamReader(System.in));
             System.out.print("Give me a date (YYYYMMDD):\t");
             String date = buReader.readLine();
-            InetAddress address = InetAddress.getLocalHost();
+            String host = InetAddress.getLocalHost().toString();
+            String response = null;
             //when socket is close input and ouput stream are closed aswell
-            try (Socket socket = new Socket(address, WeatherDataProtocol.SERVER_PORT)) {
-                PrintWriter writer = new PrintWriter(new DataOutputStream(socket.getOutputStream()), true);
-                writer.println(date);
-
-                BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                String response = processResponse(reader.readLine());
+            try {
+                Registry registry = LocateRegistry.getRegistry(host);
+                WeatherDataRemote stub = (WeatherDataRemote) registry.lookup(WeatherDataProtocol.REGISTRY_NAME);
+                response = stub.getWeatherData(date);
+                //System.out.println("response: " + response);
+            } catch (Exception e) {
+                System.err.println("Client exception: " + e.toString());
+                e.printStackTrace();
+            }
+                response = processResponse(response);
                 System.out.println(response);
             }
-        } catch (Throwable t) {
+         catch (Throwable t) {
             t.printStackTrace();
         }
     }
