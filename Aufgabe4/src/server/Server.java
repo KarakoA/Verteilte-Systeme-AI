@@ -19,6 +19,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
+/**
+ * Weather date server. Fetcher weather data from a file and writes it into a map.
+ * Accepts a string from the client in a valid date format and returns the min, max, average and 24h temperature
+ * values of the given date in the following order as a csv string. Runs in acceptor/service mode.
+ * Logfile: resources/log.txt
+ */
 public class Server implements Runnable, AutoCloseable {
 
     private final ServerSocket host;
@@ -33,15 +39,16 @@ public class Server implements Runnable, AutoCloseable {
         host = new ServerSocket(WeatherDataProtocol.SERVER_PORT);
         final Path path = Paths.get("resources/data.csv");
         localDateToTimesMap = new DateCSVReader().readFile(path);
-        threadPool=Executors.newCachedThreadPool();
+        threadPool = Executors.newCachedThreadPool();
 
         initLogger();
         computeMinMaxAverage();
     }
-    private void initLogger() throws IOException{
-        logger=Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
-        FileHandler fh= new FileHandler("resources/log.txt");
+    private void initLogger() throws IOException {
+        logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+
+        FileHandler fh = new FileHandler("resources/log.txt");
         fh.setFormatter(new SimpleFormatter());
         logger.addHandler(fh);
     }
@@ -88,7 +95,7 @@ public class Server implements Runnable, AutoCloseable {
     public void close() throws IOException {
         try {
             this.host.close();
-        }finally {
+        } finally {
             threadPool.shutdown();
         }
     }
@@ -103,11 +110,11 @@ public class Server implements Runnable, AutoCloseable {
         @Override
         public void run() {
             //PID-should be the same for all threads, they are all part of the same process
-            String pid=ManagementFactory.getRuntimeMXBean().getName().split("@")[0];
+            String pid = ManagementFactory.getRuntimeMXBean().getName().split("@")[0];
             //java thread id
-            long threadID=Thread.currentThread().getId();
-            String message= String.format("Address: %s:%d PID: %s ThreadID: %d",clientConnection.getInetAddress(),clientConnection.getPort(),pid,threadID);
-            logger.log(Level.INFO,message);
+            long threadID = Thread.currentThread().getId();
+            String message = String.format("Address: %s:%d PID: %s ThreadID: %d", clientConnection.getInetAddress(), clientConnection.getPort(), pid, threadID);
+            logger.log(Level.INFO, message);
 
             try (Socket clientConnection = this.clientConnection) {
                 System.out.println("Processing");

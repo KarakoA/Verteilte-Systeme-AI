@@ -3,12 +3,26 @@ package protocol;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-
+/**
+ * Describes the weather data protocol.
+ */
 public class WeatherDataProtocol {
+    /**
+     * The service port used by the server
+     */
     public static final int SERVER_PORT = 7777;
-    public static final DateTimeFormatter SERVER_DATE_FORMAT = DateTimeFormatter.BASIC_ISO_DATE;
 
+    /**
+     * The date format of the protocol
+     */
+    public static final DateTimeFormatter SERVER_DATE_FORMAT = DateTimeFormatter.BASIC_ISO_DATE;
+    /**
+     * Invalid date error return code
+     */
     public static final String ERROR_DATE_PARSE = "-1";
+    /**
+     * No entry for date return code
+     */
     public static final String ERROR_NO_INFO_FOR_DATE = "-2";
 
     /**

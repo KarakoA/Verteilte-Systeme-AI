@@ -12,10 +12,11 @@ import java.net.Socket;
 import static protocol.WeatherDataProtocol.ERROR_DATE_PARSE;
 import static protocol.WeatherDataProtocol.ERROR_NO_INFO_FOR_DATE;
 
+/**
+ * Client class for the weather data program. Captures the input of the user and sends a request to the weather server and
+ * then prints the info to the user.
+ */
 public class Client implements Runnable {
-    public Client() {
-    }
-
     @Override
     public void run() {
         try {
@@ -48,13 +49,13 @@ public class Client implements Runnable {
 
         String[] data = requestData.split(",");
         int minTemperature = Integer.valueOf(data[0]);
-        int maxTemperature =Integer.valueOf(data[1]);
+        int maxTemperature = Integer.valueOf(data[1]);
         double averageTemperature = Double.valueOf(data[2]);
 
         StringBuilder builder = new StringBuilder("Weather data for the given date\n");
 
-        for (int i = 0; i < data.length-3; i++) {
-            builder.append("\t" + (i < 10 ? "0" + i : i) + ":00\t" + data[i+3] + "\u00b0\n");
+        for (int i = 0; i < data.length - 3; i++) {
+            builder.append("\t" + (i < 10 ? "0" + i : i) + ":00\t" + data[i + 3] + "\u00b0\n");
         }
         builder.append("\t\tMAX\t" + maxTemperature + "\u00b0\n");
         builder.append("\t\tMIN\t" + minTemperature + "\u00b0\n");
