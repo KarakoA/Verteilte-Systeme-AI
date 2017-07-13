@@ -23,14 +23,12 @@ public class Client implements Runnable {
             BufferedReader buReader = new BufferedReader(new InputStreamReader(System.in));
             System.out.print("Give me a date (YYYYMMDD):\t");
             String date = buReader.readLine();
-            String host = InetAddress.getLocalHost().toString();
             String response = null;
             //when socket is close input and ouput stream are closed aswell
             try {
-                Registry registry = LocateRegistry.getRegistry(host);
+                Registry registry = LocateRegistry.getRegistry(null);
                 WeatherDataRemote stub = (WeatherDataRemote) registry.lookup(WeatherDataProtocol.REGISTRY_NAME);
                 response = stub.getWeatherData(date);
-                //System.out.println("response: " + response);
             } catch (Exception e) {
                 System.err.println("Client exception: " + e.toString());
                 e.printStackTrace();

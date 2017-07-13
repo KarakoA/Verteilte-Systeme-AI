@@ -15,7 +15,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
 
-import data.Articles;
+import data.Article;
 
 /**
  * 
@@ -30,7 +30,7 @@ public class WikimediaPageViewsClient {
 	 * @return List of tops articles
 	 * @throws IOException
 	 */
-	public List<Articles> getTopPages(LocalDate date) throws IOException {
+	public List<Article> getTopPages(LocalDate date) throws IOException {
 		URL myURL = new URL("https://wikimedia.org/api/rest_v1/metrics/pageviews/top/en.wikipedia.org/all-access/"
 				+ date.getYear() + "/" + (date.getMonthValue() < 10 ? "0"+date.getMonthValue() : date.getMonthValue()  ) + "/" + date.getDayOfMonth());
         URLConnection myURLConnection = myURL.openConnection();
@@ -45,10 +45,10 @@ public class WikimediaPageViewsClient {
         jsonElement = jsonObject.get("items");
         JsonArray jsonArray = jsonElement.getAsJsonArray().get(0).getAsJsonObject().get("articles").getAsJsonArray();
         
-        ArrayList<Articles> articlesList = new ArrayList<Articles>();
+        ArrayList<Article> articlesList = new ArrayList<Article>();
         for(JsonElement elmt : jsonArray)
         {
-        	Articles articles = gson.fromJson(elmt, Articles.class);
+        	Article articles = gson.fromJson(elmt, Article.class);
         	articlesList.add(articles);
         }
         return articlesList;

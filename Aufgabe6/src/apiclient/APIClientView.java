@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 import java.time.LocalDate;
 import java.util.List;
 
-import data.Articles;
+import data.Article;
 
 /**
  * 
@@ -14,11 +14,11 @@ import data.Articles;
  * First show the top 10 and allow user to navigate through the rest
  *
  */
-public class APIClienView {
+public class APIClientView {
 
 	public static void main(String[] args) throws IOException {
 		int i;
-		List<Articles> articlesList = new WikimediaPageViewsClient().getTopPages(LocalDate.of(2016, 12, 25));
+		List<Article> articlesList = new WikimediaPageViewsClient().getTopPages(LocalDate.of(2016, 12, 25));
 		  for(i=0; i<10; i++)
 	        {
 	        	System.out.println(articlesList.get(i));

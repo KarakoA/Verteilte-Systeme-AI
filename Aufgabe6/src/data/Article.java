@@ -5,13 +5,13 @@ package data;
  * Define an article from Wikipedia
  *
  */
-public class Articles {
+public class Article {
 	
 	private String article;
 	private long views;
 	private int rank;
 	
-	public Articles(String article, long views, int rank)
+	public Article(String article, long views, int rank)
 	{
 		this.article = article;
 		this.views = views;
