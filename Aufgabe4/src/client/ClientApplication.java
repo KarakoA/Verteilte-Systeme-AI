@@ -1,8 +1,6 @@
 package client;
 
-/**
- * @author Anton K.
- */
+
 public class ClientApplication {
     /**
      * Client application entry point.
